@@ -2,11 +2,22 @@ server:
   port: 8080
 
 spring:
-  application:
-    name: api-gateway
   cloud:
     gateway:
       discovery:
         locator:
-          enabled: true  # Active la découverte automatique des services via Eureka
-          lower-case-service-id: true
+          enabled: false  # ← Désactivé
+      routes:
+        - id: message
+          uri: lb://MESSAGE # Nom exact du service dans Eureka
+          predicates:
+            - Path=/api/message/**
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+    fetch-registry: true
+    register-with-eureka: true
+  instance:
+    prefer-ip-address: true
