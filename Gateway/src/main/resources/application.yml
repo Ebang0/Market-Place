@@ -12,6 +12,15 @@ spring:
           uri: lb://MESSAGE # Nom exact du service dans Eureka
           predicates:
             - Path=/api/message/**
+        - id: auth-util
+          uri: lb://AUTH-GESTION-UTILISATEUR
+          predicates: 
+            - Path=/api/auth-util/**
+        - id: role
+          uri: lb://AUTH-GESTION-UTILISATEUR
+          predicates:
+            - Path=/api/role/**
+
 
 eureka:
   client:

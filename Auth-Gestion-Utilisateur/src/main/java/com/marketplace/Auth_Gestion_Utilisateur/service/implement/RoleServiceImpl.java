@@ -26,7 +26,8 @@ public class RoleServiceImpl implements RoleService{
         if(roleDtoRequest == null)
             throw new ExceptionRuntine("pas de donnée");
         
-        roleRepository.save(roleMapper.DtoToEntity(roleDtoRequest));
+        RoleDtoRequest roleDtoRequest2 = new RoleDtoRequest(roleDtoRequest.name().toUpperCase());
+        roleRepository.save(roleMapper.DtoToEntity(roleDtoRequest2));
     }
 
     @Override

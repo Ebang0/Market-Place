@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 
 import com.marketplace.Auth_Gestion_Utilisateur.dto.UtilisateurDtoProfile;
 import com.marketplace.Auth_Gestion_Utilisateur.dto.UtilisateurDtoRequest;
-import com.marketplace.Auth_Gestion_Utilisateur.dto.UtilisateurDtoRespnose;
+import com.marketplace.Auth_Gestion_Utilisateur.dto.UtilisateurDtoResponse;
 import com.marketplace.Auth_Gestion_Utilisateur.entity.Role;
 import com.marketplace.Auth_Gestion_Utilisateur.entity.Utilisateur;
 
@@ -31,13 +31,13 @@ public class UtilisateurMapper {
                                 false);
     }
 
-    public UtilisateurDtoRespnose EntityToDto(Utilisateur utilisateur)
+    public UtilisateurDtoResponse EntityToDto(Utilisateur utilisateur)
     {
-        return new UtilisateurDtoRespnose(utilisateur.getId(),
+        return new UtilisateurDtoResponse(utilisateur.getId(),
                                           utilisateur.getNom(),
                                           utilisateur.getPrenom(),
                                           utilisateur.getEmail(),
-                                          utilisateur.isActive());
+                                          utilisateur.getActive());
     }
 
     public UtilisateurDtoProfile EntityToDtoProfile(Utilisateur utilisateur)

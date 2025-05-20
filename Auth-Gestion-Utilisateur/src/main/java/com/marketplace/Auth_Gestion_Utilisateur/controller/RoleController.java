@@ -1,56 +1,52 @@
 package com.marketplace.Auth_Gestion_Utilisateur.controller;
 
-import java.util.List;
-
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.marketplace.Auth_Gestion_Utilisateur.dto.RoleDtoRequest;
 import com.marketplace.Auth_Gestion_Utilisateur.dto.RoleDtoResponse;
-import com.marketplace.Auth_Gestion_Utilisateur.service.implement.RoleServiceImpl;
+import com.marketplace.Auth_Gestion_Utilisateur.service.RoleService;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/role")
 @RequiredArgsConstructor
 public class RoleController {
-    private final RoleServiceImpl roleServiceImpl;
+    private final RoleService roleService;
 
-    @GetMapping("/all")
-    public List<RoleDtoResponse> GetAllRole()
-    {
-        return roleServiceImpl.GetAll();
+    @GetMapping()
+    public ResponseEntity<List<RoleDtoResponse>> getAllRoles() {
+        List<RoleDtoResponse> roles = roleService.GetAll();
+        return ResponseEntity.ok(roles);
     }
 
     @GetMapping("/{id}")
-    public RoleDtoResponse Get(@PathVariable Long id) {
-        return roleServiceImpl.GetId(id);
+    public ResponseEntity<RoleDtoResponse> getRoleById(@PathVariable Long id) {
+        RoleDtoResponse role = roleService.GetId(id);
+        return ResponseEntity.ok(role);
     }
 
     @PostMapping("/save")
-    public void Save (@RequestBody RoleDtoRequest roleDtoRequest) {
-        roleServiceImpl.Save(roleDtoRequest);
+    public ResponseEntity<?> createRole(@RequestBody RoleDtoRequest roleDtoRequest) {
+        roleService.Save(roleDtoRequest);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Role entre enregistrer");
     }
 
-    @PutMapping("/update/{id}")
-    public void Update(@PathVariable Long id,@RequestBody RoleDtoRequest roleDtoRequest)
-    {
-        roleServiceImpl.Update(id,roleDtoRequest);
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateRole(
+            @PathVariable Long id,
+            @RequestBody RoleDtoRequest roleDtoRequest) {
+        roleService.Update(id, roleDtoRequest);
+        return ResponseEntity.ok().body("Role mise ajout");
     }
 
-    @DeleteMapping("/delete/{id}")
-    public void Delete(@PathVariable Long id)
-    {
-        roleServiceImpl.Delete(id);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteRole(@PathVariable Long id) {
+        roleService.Delete(id);
+        return ResponseEntity.ok().body("Role supprimer");
     }
-    
 }

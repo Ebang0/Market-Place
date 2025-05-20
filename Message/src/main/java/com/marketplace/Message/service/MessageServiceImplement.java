@@ -13,6 +13,7 @@ import com.marketplace.Message.dto.MessageDtoRequest;
 import com.marketplace.Message.dto.MessageDtoResponse;
 import com.marketplace.Message.entity.Message;
 import com.marketplace.Message.entity.Message.Status;
+import com.marketplace.Message.exception.ExceptionRuntine;
 import com.marketplace.Message.mapper.Messagemapper;
 import com.marketplace.Message.repository.MessageRepository;
 
@@ -25,24 +26,24 @@ public class MessageServiceImplement implements MessageService{
     @Override
     public void save(MessageDtoRequest messageDtoRequest) {
         if (messageDtoRequest==null)
-             return;
+             throw new ExceptionRuntine("pas de d'information");
         if(messageDtoRequest.userId1() == messageDtoRequest.userId2())
-            return;
+            throw new ExceptionRuntine("les utilisateur sont les memes");
         Message message = messagemapper.DtoToEntity(messageDtoRequest);
         message.setStatus(Status.SEND);
         message.setDate(LocalDateTime.now());
         messageRepository.save(message);
-
     }
 
     @Override
     public List<MessageDtoResponse> get(Long IdSend,Long IdReseive) {
         if (IdSend==null && IdReseive == null)
-            return null;
+            throw new ExceptionRuntine("pas de d'information");
         
         List<MessageDtoResponse> messageDtoResponses = GetAll(IdSend);
         List<MessageDtoResponse> messages = new ArrayList<>();
         int i = 0;
+
         for (MessageDtoResponse messageDtoResponse : messageDtoResponses) {
             
             if(messageDtoResponse.userId1() == IdSend && messageDtoResponse.userId2() == IdReseive)
@@ -65,20 +66,24 @@ public class MessageServiceImplement implements MessageService{
     @Override
     public List<MessageDtoResponse> GetAll(Long Id) {
         if(Id==null)
-             return null;
+            throw new ExceptionRuntine("pas de d'information");
         List<MessageDtoResponse> message=messageRepository.findByUserId1(Id).stream().map(messagemapper::EntityToDto).collect(Collectors.toList());
         List<MessageDtoResponse> message1=messageRepository.findByUserId2(Id).stream().map(messagemapper::EntityToDto).collect(Collectors.toList());
         List<MessageDtoResponse> messagefinal =Stream.concat(message.stream(), message1.stream()).collect(Collectors.toList());
+        
+        if(messagefinal == null)
+            throw new ExceptionRuntine("Pas de message");
+
         return messagefinal;
     }
 
     @Override
     public void delete(Long Id) {
         if (Id==null) 
-            return;
+            throw new ExceptionRuntine("pas de d'information");
         Message message = messageRepository.findById(Id).get();
         if (message==null) 
-             return;
+             throw new ExceptionRuntine("message n'existe pas");
         messageRepository.delete(message);
     }
 

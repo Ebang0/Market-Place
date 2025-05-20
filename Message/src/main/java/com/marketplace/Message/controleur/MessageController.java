@@ -2,6 +2,7 @@ package com.marketplace.Message.controleur;
 
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,27 +28,30 @@ public class MessageController {
     private final MessageServiceImplement messageServiceImplement;
         
     @GetMapping("/all/{Id}")
-    public List<MessageDtoResponse> getalluser(@PathVariable Long Id)
+    public ResponseEntity<List<MessageDtoResponse>>  getalluser(@PathVariable Long Id)
     {
-        return messageServiceImplement.GetAll(Id);
+        return ResponseEntity.ok(messageServiceImplement.GetAll(Id));
 
     }
     
     @PostMapping("/save")
-    public void Save(@RequestBody MessageDtoRequest messageDtoRequest){
+    public ResponseEntity<?>Save(@RequestBody MessageDtoRequest messageDtoRequest){
         messageServiceImplement.save(messageDtoRequest);
+
+        return ResponseEntity.ok().body("Envoyer");
     }
 
     @GetMapping("/all/{idSend}/reseive/{idReseive}")
-    public List<MessageDtoResponse> getAllReseive(@PathVariable Long idSend,@PathVariable Long idReseive)
+    public ResponseEntity<List<MessageDtoResponse>>  getAllReseive(@PathVariable Long idSend,@PathVariable Long idReseive)
     {
-        return messageServiceImplement.get(idSend, idReseive);
+        return ResponseEntity.ok(messageServiceImplement.get(idSend, idReseive)); 
     }
 
     @DeleteMapping("/delete/{id}")
-    public void Delete(@PathVariable Long id)
+    public ResponseEntity<?>Delete(@PathVariable Long id)
     {
         messageServiceImplement.delete(id);
+        return ResponseEntity.ok().body("Supprimer");
     }
     
 }
