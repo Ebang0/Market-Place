@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -191,15 +192,27 @@ public class UtilisateurServiceImpl implements UtilisateurService , UserDetailsS
             throw new UsernameNotFoundException("Utilisateur non trouvé avec le login: " + username);
         }
         
-        if (!util.getActive()) {
+        if (!util.isActive())
+        {
             throw new UsernameNotFoundException("Utilisateur non activé");
         }
+
+        List<GrantedAuthority> authorities = buildAuthorities(util.getRole());
         
         return new User(
             util.getLogin(),
             util.getPassword(),
-            Collections.singletonList(new SimpleGrantedAuthority("ROLE_"+util.getRole().getName()))
+            authorities
         );
+    }
+
+    private List<GrantedAuthority> buildAuthorities(Role role) {
+    // Format standard Spring Security pour les rôles
+        String roleName = role.getName().startsWith("ROLE_") 
+            ? role.getName() 
+            : "ROLE_" + role.getName();
+
+        return Collections.singletonList(new SimpleGrantedAuthority(roleName));
     }
 
 }

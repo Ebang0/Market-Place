@@ -42,9 +42,4 @@ public class Utilisateur {
     private Double longitude;
     @Column(nullable =  false)
     private boolean active;
-
-    public boolean getActive()
-    {
-        return this.active;
-    }
 }

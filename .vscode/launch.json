@@ -1,0 +1,77 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "AuthGestionUtilisateurApplication",
+            "request": "launch",
+            "mainClass": "com.marketplace.Auth_Gestion_Utilisateur.AuthGestionUtilisateurApplication",
+            "projectName": "Auth-Gestion-Utilisateur"
+        },
+        {
+            "type": "java",
+            "name": "CommandeApplication",
+            "request": "launch",
+            "mainClass": "com.marketplace.Commande.CommandeApplication",
+            "projectName": "Commande"
+        },
+        {
+            "type": "java",
+            "name": "EurekaApplication",
+            "request": "launch",
+            "mainClass": "com.marketplace.Eureka.EurekaApplication",
+            "projectName": "Eureka"
+        },
+        {
+            "type": "java",
+            "name": "GatewayApplication",
+            "request": "launch",
+            "mainClass": "com.marketplace.Gateway.GatewayApplication",
+            "projectName": "Gateway"
+        },
+        {
+            "type": "java",
+            "name": "MessageApplication",
+            "request": "launch",
+            "mainClass": "com.marketplace.Message.MessageApplication",
+            "projectName": "Message"
+        },
+        {
+            "type": "java",
+            "name": "NotationCommentaireApplication",
+            "request": "launch",
+            "mainClass": "com.marketplace.Notation_Commentaire.NotationCommentaireApplication",
+            "projectName": "Notation-Commentaire"
+        },
+        {
+            "type": "java",
+            "name": "NotificationApplication",
+            "request": "launch",
+            "mainClass": "com.marketplace.Notification.NotificationApplication",
+            "projectName": "Notification"
+        },
+        {
+            "type": "java",
+            "name": "OffreProduitApplication",
+            "request": "launch",
+            "mainClass": "com.marketplace.Offre_Demande.OffreProduitApplication",
+            "projectName": "Offre-Produit"
+        },
+        {
+            "type": "java",
+            "name": "PayementApplication",
+            "request": "launch",
+            "mainClass": "com.marketplace.Payement.PayementApplication",
+            "projectName": "Payement"
+        }
+    ]
+}

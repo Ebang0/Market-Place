@@ -37,7 +37,7 @@ public class UtilisateurMapper {
                                           utilisateur.getNom(),
                                           utilisateur.getPrenom(),
                                           utilisateur.getEmail(),
-                                          utilisateur.getActive());
+                                          utilisateur.isActive());
     }
 
     public UtilisateurDtoProfile EntityToDtoProfile(Utilisateur utilisateur)
