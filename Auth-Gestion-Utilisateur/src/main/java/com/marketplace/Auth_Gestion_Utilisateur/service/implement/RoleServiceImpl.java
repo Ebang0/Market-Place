@@ -26,6 +26,9 @@ public class RoleServiceImpl implements RoleService{
         if(roleDtoRequest == null)
             throw new ExceptionRuntine("pas de donnée");
         
+        if(roleRepository.findByName(roleDtoRequest.name().toUpperCase()) != null)
+            throw new ExceptionRuntine("Role existant");
+        
         RoleDtoRequest roleDtoRequest2 = new RoleDtoRequest(roleDtoRequest.name().toUpperCase());
         roleRepository.save(roleMapper.DtoToEntity(roleDtoRequest2));
     }
@@ -39,6 +42,7 @@ public class RoleServiceImpl implements RoleService{
 
         if(role == null)
             throw new ExceptionRuntine("N'existe pas");
+        
         
         return roleMapper.EntityToDto(role);
     }

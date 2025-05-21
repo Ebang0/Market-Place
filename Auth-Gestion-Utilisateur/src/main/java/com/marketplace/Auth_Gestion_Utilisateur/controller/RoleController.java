@@ -25,7 +25,7 @@ public class RoleController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<RoleDtoResponse> getRoleById(@PathVariable Long id) {
+    public ResponseEntity<?> getRoleById(@PathVariable Long id) {
         RoleDtoResponse role = roleService.GetId(id);
         return ResponseEntity.ok(role);
     }
