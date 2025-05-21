@@ -1,1 +1,32 @@
-                
+spring:
+  cloud:
+    gateway:
+      routes:
+      - id: auth_util
+        uri: lb://AUTH-GESTION-UTILISATEUR  # 'lb://' indique d'utiliser le load balancing
+        predicates:
+        - Path=/api/auth_util/**
+      - id: role
+        uri: lb://AUTH-GESTION-UTILISATEUR #ok
+        predicates:
+        - Path=/api/role/**
+      - id: message
+        uri: lb://MESSAGE #ok
+        predicates:
+        - Path=/api/message/**
+      - id: role
+        uri: lb://product-service
+        predicates:
+        - Path=/api/role/**
+      - id: offer
+        uri: lb://OFFRE-PRODUIT #ok
+        predicates:
+        - Path=/api/offer/**
+      - id: product
+        uri: lb://OFFRE-PRODUIT #ok
+        predicates:
+        - Path=/api/product/**
+      - id: social
+        uri: lb://NOTATION-COMMENTAIRE #ok
+        predicates:
+        - Path=/api/comments/**

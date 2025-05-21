@@ -16,7 +16,7 @@ import java.util.function.Function;
 @Service
 public class JwtService {
 
-    // Clé secrète définie dans application.properties (encodée en Base64)
+    /* // Clé secrète définie dans application.properties (encodée en Base64)
     @Value("${jwt.secret}")
     private String secretKey;
 
@@ -82,5 +82,5 @@ public class JwtService {
     private Key getSignInKey() {
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         return Keys.hmacShaKeyFor(keyBytes);
-    }
+    } */
 }
