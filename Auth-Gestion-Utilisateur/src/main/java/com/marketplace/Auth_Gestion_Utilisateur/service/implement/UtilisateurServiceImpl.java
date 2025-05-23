@@ -67,8 +67,6 @@ public class UtilisateurServiceImpl implements UtilisateurService , UserDetailsS
                                     role,
                                     utilisateurDtoRequest.departement(),
                                     utilisateurDtoRequest.ville(),
-                                    utilisateurDtoRequest.latitude(),
-                                    utilisateurDtoRequest.longitude(),
                                     active);
 
         

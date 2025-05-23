@@ -37,9 +37,5 @@ public class Utilisateur {
     @Column(nullable =  true)
     private String ville;
     @Column(nullable =  true)
-    private Double latitude;
-    @Column(nullable =  true)
-    private Double longitude;
-    @Column(nullable =  false)
     private boolean active;
 }

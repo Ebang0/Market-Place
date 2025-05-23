@@ -9,7 +9,5 @@ public record UtilisateurDtoRequest(
     String password,
     Long idRole,
     String departement,
-    String ville,
-    Double longitude,
-    Double latitude) {    
+    String ville) {    
 }

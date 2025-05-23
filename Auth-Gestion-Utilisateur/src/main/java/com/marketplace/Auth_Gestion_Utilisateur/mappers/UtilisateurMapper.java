@@ -26,8 +26,6 @@ public class UtilisateurMapper {
                                 role,
                                 utilisateurDtoRequest.departement(),
                                 utilisateurDtoRequest.ville(),
-                                utilisateurDtoRequest.latitude(),
-                                utilisateurDtoRequest.longitude(),
                                 false);
     }
 
