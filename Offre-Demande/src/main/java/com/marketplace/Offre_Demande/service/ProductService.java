@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.marketplace.Offre_Demande.dto.ProductDtoRequest;
 import com.marketplace.Offre_Demande.dto.ProductDtoResponse;
+import com.marketplace.Offre_Demande.dto.ProductDtoResponseList;
 import com.marketplace.Offre_Demande.entity.Product;
 import com.marketplace.Offre_Demande.mappers.ProductMappers;
 import com.marketplace.Offre_Demande.repository.ProductRepository;
@@ -59,5 +60,10 @@ public class ProductService {
         return productRepository.findAll().stream()
         .map(productMappers::EntityToDto)
         .collect(Collectors.toList());
+    }
+
+    public ProductDtoResponseList getProduct(Long id)
+    {
+        return productMappers.EntityToDtoList(productRepository.findById(id).get());
     }
 }

@@ -6,6 +6,7 @@ public record OfferDtoResponse( String name,
                                 Long offerId, 
                                 Long quantity, 
                                 Double price, 
+                                String ville,
                                 LocalDateTime date,
                                 String description,
                                 String image) {

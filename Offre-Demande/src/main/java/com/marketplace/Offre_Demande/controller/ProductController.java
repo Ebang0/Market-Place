@@ -19,13 +19,13 @@ public class ProductController {
 
     private final ProductService productService;
 
-    @PostMapping
+    @PostMapping("/save")
     public ResponseEntity<?> createProduct(@RequestBody ProductDtoRequest dto) {
         productService.createPoduct(dto);
         return ResponseEntity.ok().body("Enrgistrer");
     }
 
-    @GetMapping
+    @GetMapping("/get/all")
     public ResponseEntity<List<ProductDtoResponse>> getAllProducts() {
 
         return ResponseEntity.ok(productService.getAllProducts());
@@ -37,9 +37,15 @@ public class ProductController {
         return ResponseEntity.ok().body("Mise ajout terminer");
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteProduct(@PathVariable Long id) {
         productService.deleteProduct(id);
         return ResponseEntity.ok().body("Produit supprimer");
+    }
+
+    @GetMapping("/get/{id}")
+    public ResponseEntity<?> getOffer(@PathVariable Long id)
+    {
+        return ResponseEntity.ok(productService.getProduct(id));
     }
 }

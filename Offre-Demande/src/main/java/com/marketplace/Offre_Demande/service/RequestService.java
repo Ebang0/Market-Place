@@ -18,5 +18,4 @@ public interface RequestService {
     public List<RequestDtoResponse> getAll();
     public List<RequestDtoResponse> getAllForValidate(Long idValidate);
     public List<RequestDtoResponse> getAllForProduct(Long idProduct);
-    public List<RequestDtoResponse> getAllForStatus(Long idStatus);
 }

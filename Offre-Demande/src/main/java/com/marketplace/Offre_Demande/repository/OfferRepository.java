@@ -9,4 +9,5 @@ import com.marketplace.Offre_Demande.entity.Product;
 
 public interface OfferRepository extends JpaRepository<Offer,Long> {
     List<Offer> findByProduct(Product product);
+    List<Offer> findByVille(String ville);
 }

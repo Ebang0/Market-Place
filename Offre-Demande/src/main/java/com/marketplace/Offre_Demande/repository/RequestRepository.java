@@ -11,4 +11,5 @@ public interface RequestRepository extends JpaRepository<Request,Long>{
     List<Request> findByProduct(Product product);
     List<Request> findByValidate(Boolean validate);
     List<Request> findByStatus(Status status);
+    List<Request> findByIdProducteur(Long idProducteur);
 }

@@ -112,5 +112,15 @@ public class OfferService {
         offerRepository.delete(offer);
     }
 
+    public List<OfferDtoResponse> getOfferByVille(String ville)
+    {
+        if(ville == null)
+        {
+            throw new ResourceNotFoundException("Pas de ville");
+        }
+
+        return offerRepository.findByVille(ville).stream().map(offerMappers::EntityToDto).collect(Collectors.toList());
+    } 
+
 
 }

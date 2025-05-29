@@ -4,6 +4,7 @@ import com.marketplace.Offre_Demande.dto.OfferDtoRequest;
 import com.marketplace.Offre_Demande.dto.OfferDtoResponse;
 import com.marketplace.Offre_Demande.service.OfferService;
 
+import jakarta.websocket.server.PathParam;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.ResponseEntity;
@@ -56,5 +57,11 @@ public class OfferController {
     @GetMapping("/producer/{productId}")
     public ResponseEntity<List<OfferDtoResponse>> getOffersByProducer(@PathVariable Long productId) {
         return ResponseEntity.ok(offerService.getOffersByProduct(productId));
+    }
+
+    @GetMapping("/ville")
+    public ResponseEntity<List<OfferDtoResponse>> getOfferByVille(@PathParam("ville")String ville)
+    {
+        return ResponseEntity.ok(offerService.getOfferByVille(ville));
     }
 }

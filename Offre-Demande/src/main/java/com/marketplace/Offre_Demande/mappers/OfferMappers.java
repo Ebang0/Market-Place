@@ -22,12 +22,13 @@ public class OfferMappers {
     offer.setDescription(offertDtoRequest.description());
     offer.setProduct(productRepository.findById(offertDtoRequest.idPoduct()).get());
     offer.setImage(offertDtoRequest.image());
+    offer.setVille(offertDtoRequest.ville());
     return offer;
   }
   
   public OfferDtoResponse EntityToDto(Offer offer){
 
-    return new OfferDtoResponse(productRepository.findById(offer.getProduct().getProductId()).get().getProductName(),offer.getOfferId(), offer.getQuantity(), offer.getPrice(), offer.getDate(),offer.getDescription(),offer.getImage());
+    return new OfferDtoResponse(productRepository.findById(offer.getProduct().getProductId()).get().getProductName(),offer.getOfferId(), offer.getQuantity(), offer.getPrice(), offer.getVille(), offer.getDate(),offer.getDescription(),offer.getImage());
   }
   
 }

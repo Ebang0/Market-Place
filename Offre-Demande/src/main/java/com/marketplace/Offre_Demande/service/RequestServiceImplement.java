@@ -141,29 +141,9 @@ public class RequestServiceImplement implements RequestService {
         if(idProduct == null)
             throw new ResourceNotFoundException("Pas d'information");
 
-        List<Request> requests = requestRepository.findByProduct(productRepository.findById(idProduct).get());
-
+        List<Request> request = requestRepository.findByProduct(productRepository.findById(idProduct).get());
+        List<Request> requests = request.stream().filter(o -> o.getValidate()).collect(Collectors.toList());
         return requests.stream().map(requestMapper::EntityToDto).collect(Collectors.toList());  
-    }
-
-    @Override
-    public List<RequestDtoResponse> getAllForStatus(Long idStatus) {
-        if(idStatus == null || idStatus > 3 || idStatus < 1)
-            throw new ResourceNotFoundException("Pas d'information"); 
-        
-        List<Request> requests = new ArrayList<>();     
-        if(idStatus == 2) 
-            requests = requestRepository.findByStatus(Status.Validate);
-        if(idStatus == 1)
-            requests = requestRepository.findByStatus(Status.End);
-        else 
-            requests = requestRepository.findByStatus(Status.Reading);
-
-        if(requests.size() < 1)
-            throw new ResourceNotFoundException("Pas demande");
-
-        return requests.stream().map(requestMapper::EntityToDto).collect(Collectors.toList());
-    
     }
 
     @Override

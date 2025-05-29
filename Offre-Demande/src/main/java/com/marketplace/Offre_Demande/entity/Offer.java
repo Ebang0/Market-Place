@@ -23,12 +23,13 @@ public class Offer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long offerId;
     @ManyToOne
-    @JoinColumn(name="producerId")
+    @JoinColumn(name="productId")
     private Product product;
     private Long idProducteur;
     @Column(nullable = false)
     private Long quantity;
     private Double price;
+    private String ville;
     private String description;
     private LocalDateTime date;
     private String image;
