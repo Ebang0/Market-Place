@@ -8,6 +8,8 @@ import com.marketplace.Notation_Commentaire.dto.CommentDtoResponse;
 import com.marketplace.Notation_Commentaire.entity.Comments;
 import com.marketplace.Notation_Commentaire.mapper.CommentMapper;
 import com.marketplace.Notation_Commentaire.repository.CommentRepository;
+import com.marketplace.Notation_Commentaire.requetes_externes_aux_services.OffreDto;
+import com.marketplace.Notation_Commentaire.requetes_externes_aux_services.OffreService;
 import com.marketplace.Notation_Commentaire.requetes_externes_aux_services.UserDatas;
 import com.marketplace.Notation_Commentaire.requetes_externes_aux_services.UserDatasClient;
 
@@ -21,6 +23,7 @@ public class CommentServiceImplement implements CommentService {
     private final CommentRepository commentRepository;
     private final CommentMapper commentMapper;
     private final UserDatasClient userDatasClient;
+    private final OffreService offreService;
 
     @Override
     public boolean Save( Long idUser, Long idOffre, CommentDtoRequest commentDtoRequest) {
@@ -31,6 +34,11 @@ public class CommentServiceImplement implements CommentService {
         UserDatas userDatas = userDatasClient.getUserDatasById(idUser);
         if(userDatas == null)
             return false;
+
+        OffreDto offreDto = offreService.getOffre(idOffre);
+        if (offreDto == null) {
+            return false;
+        }
         
         Comments comment = commentMapper.DtoToEntity(commentDtoRequest);
         comment.setIdOffre(idOffre);

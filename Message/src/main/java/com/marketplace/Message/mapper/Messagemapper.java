@@ -14,7 +14,7 @@ public class Messagemapper {
     }
 
     public Message DtoToEntity( MessageDtoRequest messageDtoRequest){
-       Message message=new Message(null,messageDtoRequest.userId1(),messageDtoRequest.userId2(),messageDtoRequest.description(),null,null) ;
+       Message message=new Message(null,null,null,messageDtoRequest.description(),null,null) ;
        return message;
     }
 }

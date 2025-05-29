@@ -18,7 +18,7 @@ import java.util.List;
 public class RoleController {
     private final RoleService roleService;
 
-    @GetMapping()
+    @GetMapping("/all")
     public ResponseEntity<List<RoleDtoResponse>> getAllRoles() {
         List<RoleDtoResponse> roles = roleService.GetAll();
         return ResponseEntity.ok(roles);
@@ -36,7 +36,7 @@ public class RoleController {
         return ResponseEntity.status(HttpStatus.CREATED).body("Role entre enregistrer");
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<?> updateRole(
             @PathVariable Long id,
             @RequestBody RoleDtoRequest roleDtoRequest) {
@@ -44,7 +44,7 @@ public class RoleController {
         return ResponseEntity.ok().body("Role mise ajout");
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteRole(@PathVariable Long id) {
         roleService.Delete(id);
         return ResponseEntity.ok().body("Role supprimer");

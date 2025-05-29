@@ -34,9 +34,9 @@ public class MessageController {
 
     }
     
-    @PostMapping("/save")
-    public ResponseEntity<?>Save(@RequestBody MessageDtoRequest messageDtoRequest){
-        messageServiceImplement.save(messageDtoRequest);
+    @PostMapping("/{userId1}/save/{userId2}")
+    public ResponseEntity<?>Save(@RequestBody MessageDtoRequest messageDtoRequest,@PathVariable Long userId1,@PathVariable Long userId2){
+        messageServiceImplement.save(userId1,userId2,messageDtoRequest);
 
         return ResponseEntity.ok().body("Envoyer");
     }

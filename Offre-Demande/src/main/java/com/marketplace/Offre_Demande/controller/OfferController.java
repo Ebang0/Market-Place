@@ -24,7 +24,7 @@ public class OfferController {
         return ResponseEntity.ok().body("Offre engistrer");
     }
     //detail offre
-    @GetMapping("/{id}")
+    @GetMapping("/get/{id}")
     public ResponseEntity<OfferDtoResponse> getOffer(@PathVariable Long id) {
         return ResponseEntity.ok(offerService.getOffer(id));
     }
@@ -52,9 +52,9 @@ public class OfferController {
         offerService.cancelOffer(id);
         return ResponseEntity.ok().body("Offre annuler");
     }
-    //par category
-    @GetMapping("/producer/{producerId}")
-    public ResponseEntity<List<OfferDtoResponse>> getOffersByProducer(@PathVariable Long producerId) {
-        return ResponseEntity.ok(offerService.getOffersByProducer(producerId));
+    //par produit
+    @GetMapping("/producer/{productId}")
+    public ResponseEntity<List<OfferDtoResponse>> getOffersByProducer(@PathVariable Long productId) {
+        return ResponseEntity.ok(offerService.getOffersByProduct(productId));
     }
 }

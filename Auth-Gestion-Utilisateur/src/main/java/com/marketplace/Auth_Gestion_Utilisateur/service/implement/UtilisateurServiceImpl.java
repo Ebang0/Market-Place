@@ -1,15 +1,9 @@
 package com.marketplace.Auth_Gestion_Utilisateur.service.implement;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +22,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class UtilisateurServiceImpl implements UtilisateurService , UserDetailsService{
+public class UtilisateurServiceImpl implements UtilisateurService{
    
     private final PasswordEncoder passwordEncoder;
     private final UtilisateurRepository utilisateurRepository;
@@ -121,10 +115,7 @@ public class UtilisateurServiceImpl implements UtilisateurService , UserDetailsS
         if(id == null)
             throw new ExceptionRuntine("Pas d'information");
 
-        Utilisateur utilisateur = utilisateurRepository.findById(id).get();
-
-        if(utilisateur == null)
-            throw new ExceptionRuntine("Utilisateur de l'identifiant" + id + " n'existe pas");
+        Utilisateur utilisateur = utilisateurRepository.findById(id).orElseThrow(()->new ExceptionRuntine("Utilisateur de l'identifiant" + id + " n'existe pas"));
 
         return utilisateurMapper.EntityToDtoProfile(utilisateur);
     }
@@ -181,36 +172,4 @@ public class UtilisateurServiceImpl implements UtilisateurService , UserDetailsS
         
         return utilisateur.stream().map(utilisateurMapper::EntityToDto).collect(Collectors.toList());
     }
-
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Utilisateur util = utilisateurRepository.findByLogin(username);
-        
-        if (util == null) {
-            throw new UsernameNotFoundException("Utilisateur non trouvé avec le login: " + username);
-        }
-        
-        if (!util.isActive())
-        {
-            throw new UsernameNotFoundException("Utilisateur non activé");
-        }
-
-        List<GrantedAuthority> authorities = buildAuthorities(util.getRole());
-        
-        return new User(
-            util.getLogin(),
-            util.getPassword(),
-            authorities
-        );
-    }
-
-    private List<GrantedAuthority> buildAuthorities(Role role) {
-    // Format standard Spring Security pour les rôles
-        String roleName = role.getName().startsWith("ROLE_") 
-            ? role.getName() 
-            : "ROLE_" + role.getName();
-
-        return Collections.singletonList(new SimpleGrantedAuthority(roleName));
-    }
-
 }

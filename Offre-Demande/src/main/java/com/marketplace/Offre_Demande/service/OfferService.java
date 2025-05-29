@@ -53,8 +53,8 @@ public class OfferService {
                 .orElseThrow(() -> new RuntimeException("Offer not found"));
         return offerMappers.EntityToDto(offer);
     }
-    //pour les category
-    public List<OfferDtoResponse> getOffersByProducer(Long producerId){
+    //listing par produit
+    public List<OfferDtoResponse> getOffersByProduct(Long producerId){
         if(producerId == null)
             throw new RuntimeException("Pas d'information");
         List<Offer> offers = offerRepository.findByProduct(productRepository.findById(producerId).get());

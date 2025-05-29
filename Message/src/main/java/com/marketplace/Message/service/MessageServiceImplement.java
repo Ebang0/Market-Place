@@ -9,8 +9,10 @@ import java.util.stream.Stream;
 
 import org.springframework.stereotype.Service;
 
+import com.marketplace.Message.CustomService.UtilisateurService;
 import com.marketplace.Message.dto.MessageDtoRequest;
 import com.marketplace.Message.dto.MessageDtoResponse;
+import com.marketplace.Message.dto.UtilisateurDtoProfile;
 import com.marketplace.Message.entity.Message;
 import com.marketplace.Message.entity.Message.Status;
 import com.marketplace.Message.exception.ExceptionRuntine;
@@ -23,15 +25,24 @@ import lombok.RequiredArgsConstructor;
 public class MessageServiceImplement implements MessageService{
     private final Messagemapper messagemapper;
     private final MessageRepository messageRepository;
+    private final UtilisateurService utilisateurService;
     @Override
-    public void save(MessageDtoRequest messageDtoRequest) {
+    public void save(Long userId1,Long userId2, MessageDtoRequest messageDtoRequest) {
         if (messageDtoRequest==null)
              throw new ExceptionRuntine("pas de d'information");
-        if(messageDtoRequest.userId1() == messageDtoRequest.userId2())
+        if(userId1 == userId2)
             throw new ExceptionRuntine("les utilisateur sont les memes");
+
+        UtilisateurDtoProfile utilisateurDtoProfile = utilisateurService.getUserDatasById(userId1);
+        UtilisateurDtoProfile utilisateurDtoProfile2 = utilisateurService.getUserDatasById(userId2);
+
+        if(utilisateurDtoProfile == null || utilisateurDtoProfile2 == null )
+            throw new ExceptionRuntine("Pas d'utilidateur");
         Message message = messagemapper.DtoToEntity(messageDtoRequest);
         message.setStatus(Status.SEND);
         message.setDate(LocalDateTime.now());
+        message.setUserId1(userId1);
+        message.setUserId2(userId2);
         messageRepository.save(message);
     }
 

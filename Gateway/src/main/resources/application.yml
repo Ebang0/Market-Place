@@ -30,3 +30,9 @@ spring:
         uri: lb://NOTATION-COMMENTAIRE #ok
         predicates:
         - Path=/api/comments/**
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
