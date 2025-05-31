@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "ImageApplication",
+            "request": "launch",
+            "mainClass": "com.example.Image.ImageApplication",
+            "projectName": "Image"
+        },
+        {
+            "type": "java",
             "name": "Current File",
             "request": "launch",
             "mainClass": "${file}"

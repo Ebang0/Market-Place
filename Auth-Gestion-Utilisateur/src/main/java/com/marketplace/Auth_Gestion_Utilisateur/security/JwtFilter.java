@@ -9,7 +9,6 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.marketplace.Auth_Gestion_Utilisateur.service.UtilisateurService;
 import com.marketplace.Auth_Gestion_Utilisateur.service.implement.CustomServic;
 
 import jakarta.servlet.FilterChain;
