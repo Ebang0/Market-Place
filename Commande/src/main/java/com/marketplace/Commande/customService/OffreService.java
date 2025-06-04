@@ -13,7 +13,7 @@ public interface OffreService {
     @GetMapping("/api/offer/get/{id}")
     OffreDto getOffre(@PathVariable Long id);
 
-    @PutMapping("{idOffer}/update/{quantite}")
+    @PutMapping("/api/offer/{idOffer}/update/{quantite}")
     void updateOfferQuantity(@PathVariable Long idOffer, @PathVariable Double quantite);
 
 
