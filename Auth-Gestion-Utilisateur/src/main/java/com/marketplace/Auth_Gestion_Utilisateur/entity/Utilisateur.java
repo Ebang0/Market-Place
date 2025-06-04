@@ -1,5 +1,7 @@
 package com.marketplace.Auth_Gestion_Utilisateur.entity;
 
+import com.marketplace.Auth_Gestion_Utilisateur.exception.ExceptionRuntine;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -38,4 +40,8 @@ public class Utilisateur {
     private String ville;
     @Column(nullable =  true)
     private boolean active;
+    public Utilisateur orElseThrow(ExceptionRuntine exceptionRuntine) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'orElseThrow'");
+    }
 }

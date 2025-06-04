@@ -7,4 +7,5 @@ eureka:
   client:
     register-with-eureka: false  # Ce serveur ne s'enregistre pas lui-même
     fetch-registry: false         # Ne récupère pas le registre d'autres serveurs
-    service-url.defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka
+    service-url:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka

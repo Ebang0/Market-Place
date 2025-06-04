@@ -21,14 +21,15 @@ public class CommentController {
 
     private final CommentServiceImplement commentServiveImplement;
 
+    @CrossOrigin
     @GetMapping("/getComment/{idOffre}")
     public List<CommentDtoResponse> getComment(@PathVariable Long idOffre){
         return commentServiveImplement.getAll(idOffre);
     }
 
     // POST /comments → Création
+    @CrossOrigin
     @PostMapping("/{idUser}/postComment/{idOffre}")
-    
     public ResponseEntity<?> postComment(@PathVariable Long idUser, @PathVariable Long idOffre, @RequestBody CommentDtoRequest commentDtoRequest){
               
         
@@ -38,7 +39,6 @@ public class CommentController {
             return ResponseEntity.status(HttpStatus.FOUND).body("Pas de commentaires");
         else 
             return ResponseEntity.ok().body("Commentaire enregistré");
-
     }
  
 

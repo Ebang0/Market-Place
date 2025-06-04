@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -39,6 +40,7 @@ public class UtilisateurController {
     private final CustomServic customServic;
     private final JwtService jwtService;
 
+    @CrossOrigin
     @PostMapping("/connexion")
     public ResponseEntity<?> Login(@RequestBody LoginDto loginDto)
     {
@@ -61,6 +63,7 @@ public class UtilisateurController {
         }
     }
 
+    @CrossOrigin
     @PostMapping("/inscription")
     public ResponseEntity<?> Inscription(@RequestBody UtilisateurDtoRequest utilisateurDtoRequest)
     {
@@ -68,24 +71,28 @@ public class UtilisateurController {
         return ResponseEntity.ok().body("Inscription Terminer");
     }
 
-    @GetMapping("/profile/{id}")
+    @CrossOrigin
+    @GetMapping("/profil/{id}")
     public ResponseEntity<?> GetProfile(@PathVariable Long id)
     {
         return ResponseEntity.ok(utilisateurServiceImpl.Get(id));
     }
 
-    @GetMapping("/active")
-    public ResponseEntity<List<UtilisateurDtoResponse>>GetActive()
+    @CrossOrigin
+    @GetMapping("/desactive")
+    public ResponseEntity<List<UtilisateurDtoResponse>>GetDesActive()
     {
         return ResponseEntity.ok(utilisateurServiceImpl.GetAllActive());
     }
 
+    @CrossOrigin
     @GetMapping("/role/{id}")
     public ResponseEntity<List<UtilisateurDtoResponse>> GetAllForRole(@PathVariable Long id)
     {
         return ResponseEntity.ok(utilisateurServiceImpl.GetAllUtilisateurRole(id));
     }
 
+    @CrossOrigin
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> Delete(@PathVariable Long id)
     {
@@ -93,6 +100,7 @@ public class UtilisateurController {
         return ResponseEntity.ok().body("Utilisateur supprimer");
     }
 
+    @CrossOrigin
     @PutMapping("/active/{id}")
     public ResponseEntity<?> ActiveUser(@PathVariable Long id)
     {
@@ -100,6 +108,7 @@ public class UtilisateurController {
         return ResponseEntity.ok().body("Utilisateur active");
     }
 
+    @CrossOrigin
     @GetMapping("/token/{id}")
     public String ValidateToken(@RequestParam("token") String token, @PathVariable Long id)
     {
@@ -111,6 +120,4 @@ public class UtilisateurController {
         else
             return "Non valide";
     }
-
-
 }

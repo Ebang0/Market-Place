@@ -27,6 +27,12 @@ public class ProductService {
         if(request == null)
             throw new RuntimeException("Pas d'informtion");
 
+        if(request.Price() == null)
+            throw new RuntimeException("Pas de prix");
+        
+        if(request.productName() == null)
+            throw new RuntimeException("Pas de nom");
+
         Product product = new Product();
         product.setProductName(request.productName());
         product.setPrice(request.Price()); 
@@ -64,6 +70,7 @@ public class ProductService {
 
     public ProductDtoResponseList getProduct(Long id)
     {
-        return productMappers.EntityToDtoList(productRepository.findById(id).get());
+        Product product = productRepository.findById(id).orElseThrow( () -> new RuntimeException("L'offre n'existe pas"));
+        return productMappers.EntityToDtoList(product);
     }
 }

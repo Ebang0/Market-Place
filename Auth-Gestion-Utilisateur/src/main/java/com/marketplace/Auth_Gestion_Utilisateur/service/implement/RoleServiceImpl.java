@@ -38,11 +38,7 @@ public class RoleServiceImpl implements RoleService{
         if(id == null)
             throw new ExceptionRuntine("Manque d'information");
 
-        Role role = roleRepository.findById(id).get();
-
-        if(role == null)
-            throw new ExceptionRuntine("N'existe pas");
-        
+        Role role = roleRepository.findById(id).orElseThrow(() -> new ExceptionRuntine("N'existe pas"));
         
         return roleMapper.EntityToDto(role);
     }
@@ -63,10 +59,7 @@ public class RoleServiceImpl implements RoleService{
         if(id == null)
             throw new ExceptionRuntine("Manque d'information : id");
         
-        Role role = roleRepository.findById(id).get();
-
-        if(role == null)
-            throw new ExceptionRuntine("Pas de role");
+        Role role = roleRepository.findById(id).orElseThrow(() -> new ExceptionRuntine("Pas de role"));
         
         roleRepository.delete(role);
     }
@@ -76,14 +69,15 @@ public class RoleServiceImpl implements RoleService{
         if(id == null || roleDtoRequest == null)
             throw new ExceptionRuntine("Manque d'information");
 
-        Role role = roleRepository.findById(id).get();
+        Role role = roleRepository.findById(id).orElseThrow(() -> new ExceptionRuntine("Pas de role"));
 
-        if(role == null)
-            throw new ExceptionRuntine("Identifient non existant");
-        
         Role role2 = roleMapper.DtoToEntity(roleDtoRequest);
 
+        if(roleRepository.findByName(roleDtoRequest.name().toUpperCase()) != null)
+            throw new ExceptionRuntine("Role existant");
+
         role2.setId(id);
+        role2.setName(role.getName().toUpperCase());
 
         roleRepository.save(role2);
     }

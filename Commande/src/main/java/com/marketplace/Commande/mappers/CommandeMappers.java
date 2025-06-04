@@ -11,14 +11,13 @@ import com.marketplace.Commande.entity.Commande;
 public class CommandeMappers {
     public Commande DtoToEntity(CommandeDtoRequest commandeDtoRequest){
         Commande commande = new Commande();
-        commande.setStatut(commandeDtoRequest.statut());
-        commande.setPrixtotal(commandeDtoRequest.prixtotal());
+        commande.setQuantite(commandeDtoRequest.quantite());
 
         return commande;
     }
 
     public CommandeDtoResponse EntityToDto(Commande commande){
-        return new CommandeDtoResponse(commande.getId(), commande.getCommandeDate(), commande.getStatut(), commande.getPrixtotal());
+        return new CommandeDtoResponse(commande.getId(), commande.getCommandeDate(), commande.getStatut(),commande.getQuantite(), commande.getPrixtotal());
     }
 
 }

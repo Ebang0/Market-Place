@@ -36,15 +36,18 @@ public class UtilisateurServiceImpl implements UtilisateurService{
             throw new ExceptionRuntine("Pas d'information");
         }
 
-        if(utilisateurRepository.findByLogin(utilisateurDtoRequest.login()) != null)
+        if(utilisateurRepository.findByLogin(utilisateurDtoRequest.username()) != null)
             throw new ExceptionRuntine("Login existant");
 
+        if(utilisateurRepository.findByTel(utilisateurDtoRequest.contact()) != null)
+            throw new ExceptionRuntine("contact existant");
+        
+        if(utilisateurRepository.findByEmail(utilisateurDtoRequest.email()) != null)
+            throw new ExceptionRuntine("Email existant");
+        
         boolean active = false;
 
-        Role role = roleRepository.findById(utilisateurDtoRequest.idRole()).get();
-
-        if(utilisateurDtoRequest.login() == null)
-            throw new ExceptionRuntine("Entrer un login");
+        Role role = roleRepository.findById(utilisateurDtoRequest.idRole()).orElseThrow(() -> new ExceptionRuntine("Entrer un login"));
 
         if(role.getName().equals("PRODUCTEUR"))
             active = false;
@@ -55,8 +58,8 @@ public class UtilisateurServiceImpl implements UtilisateurService{
                                     utilisateurDtoRequest.nom(),
                                     utilisateurDtoRequest.prenom(),
                                     utilisateurDtoRequest.email(),
-                                    utilisateurDtoRequest.tel(),
-                                    utilisateurDtoRequest.login(), 
+                                    utilisateurDtoRequest.contact(),
+                                    utilisateurDtoRequest.username(), 
                                     passwordEncoder.encode(utilisateurDtoRequest.password()),
                                     role,
                                     utilisateurDtoRequest.departement(),
@@ -73,11 +76,8 @@ public class UtilisateurServiceImpl implements UtilisateurService{
         if(id == null)
             throw new ExceptionRuntine("Pas d'information");
 
-        Utilisateur utilisateur = utilisateurRepository.findById(id).get();
+        Utilisateur utilisateur = utilisateurRepository.findById(id).orElseThrow(() -> new ExceptionRuntine("Utilisateur ayant l'identifiant :" + id + " n'existe pas"));
 
-        if(utilisateur == null)
-            throw new ExceptionRuntine("Utilisateur ayant l'identifiant :" + id + " n'existe pas");
-        
         Utilisateur utilisateur2 = utilisateurMapper.DtotoEntity(utilisateurDtoRequest);
         utilisateur2.setId(utilisateur.getId());
     }
@@ -87,11 +87,8 @@ public class UtilisateurServiceImpl implements UtilisateurService{
         if(id == null)
             throw new ExceptionRuntine("Pas d'information");
 
-        Utilisateur utilisateur = utilisateurRepository.findById(id).get();
+        Utilisateur utilisateur = utilisateurRepository.findById(id).orElseThrow(() -> new ExceptionRuntine("Utilisateur ayant l'identifiant :" + id + " n'existe pas"));
 
-        if(utilisateur == null)
-            throw new ExceptionRuntine("Utilisateur ayant l'identifiant :" + id + " n'existe pas");
-        
         utilisateur.setActive(true);
 
         utilisateurRepository.save(utilisateur);
@@ -102,11 +99,8 @@ public class UtilisateurServiceImpl implements UtilisateurService{
         if(id == null)
             throw new ExceptionRuntine("Pas d'information");
 
-        Utilisateur utilisateur = utilisateurRepository.findById(id).get();
+        Utilisateur utilisateur = utilisateurRepository.findById(id).orElseThrow(() -> new ExceptionRuntine("Utilisateur ayant l'identifiant :" + id + " n'existe pas"));
 
-        if(utilisateur == null)
-            throw new ExceptionRuntine("Utilisateur ayant l'identifiant :" + id + " n'existe pas");
-        
         utilisateurRepository.delete(utilisateur);
     }
 
@@ -115,7 +109,7 @@ public class UtilisateurServiceImpl implements UtilisateurService{
         if(id == null)
             throw new ExceptionRuntine("Pas d'information");
 
-        Utilisateur utilisateur = utilisateurRepository.findById(id).orElseThrow(()->new ExceptionRuntine("Utilisateur de l'identifiant" + id + " n'existe pas"));
+        Utilisateur utilisateur = utilisateurRepository.findById(id).orElseThrow(() -> new ExceptionRuntine("Utilisateur de l'identifiant" + id + " n'existe pas"));
 
         return utilisateurMapper.EntityToDtoProfile(utilisateur);
     }
@@ -123,7 +117,7 @@ public class UtilisateurServiceImpl implements UtilisateurService{
     @Override
     public List<UtilisateurDtoResponse> GetAllActive() {
         List<Utilisateur> utilisateurs = utilisateurRepository.findByActive(false);
-        if(utilisateurs == null)
+        if(utilisateurs.isEmpty())
             throw new ExceptionRuntine("Pas d'utilisateur desactiver");
         
         return utilisateurs.stream().map(utilisateurMapper::EntityToDto).collect(Collectors.toList());
@@ -133,14 +127,11 @@ public class UtilisateurServiceImpl implements UtilisateurService{
     public List<UtilisateurDtoResponse> GetAllUtilisateurRole(Long id) {
         if(id == null)
             throw new ExceptionRuntine("pas information");
-        Role role = roleRepository.findById(id).get();
-
-        if(role == null)
-            throw new ExceptionRuntine("role n'existe pas");
+        Role role = roleRepository.findById(id).orElseThrow(() -> new ExceptionRuntine("role n'existe pas"));
         
         List<Utilisateur> utilisateurs = utilisateurRepository.findByRole(role);
         
-        if(utilisateurs == null)
+        if(utilisateurs == null || utilisateurs.size() == 0)
             throw new ExceptionRuntine("Pas d'utilisateur ayant le " + role.getName());
         
         return utilisateurs.stream().map(utilisateurMapper::EntityToDto).collect(Collectors.toList());
@@ -167,7 +158,7 @@ public class UtilisateurServiceImpl implements UtilisateurService{
 
         List<Utilisateur> utilisateur = utilisateurRepository.findByNom(name);
 
-        if(utilisateur == null)
+        if(utilisateur == null || utilisateur.size() == 0)
             throw new ExceptionRuntine("utilisateur n'existe pas");
         
         return utilisateur.stream().map(utilisateurMapper::EntityToDto).collect(Collectors.toList());

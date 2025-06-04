@@ -30,7 +30,7 @@ public class SecureConfig {
                 .requestMatchers(
                     "/api/auth_util/inscription",
                     "/api/auth_util/connexion",
-                    "/api/auth_util/profile/{id}",
+                    "/api/auth_util/profil/{id}",
                     "/api/role/all",
                     "/api/role/{id}",
                     "/api/auth_util/token/**"

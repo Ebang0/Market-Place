@@ -1,17 +1,27 @@
 spring:
   cloud:
     gateway:
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "http://192.168.43.155:3000"
+            allowedHeaders: "*"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
       routes:
       - id: auth_util
-        uri: lb://AUTH-GESTION-UTILISATEUR  # 'lb://' indique d'utiliser le load balancing
+        uri: lb://AUTH-GESTION-UTILISATEUR  #
         predicates:
         - Path=/api/auth_util/**
       - id: role
-        uri: lb://AUTH-GESTION-UTILISATEUR #ok
+        uri: lb://AUTH-GESTION-UTILISATEUR #
         predicates:
         - Path=/api/role/**
       - id: message
-        uri: lb://MESSAGE #ok
+        uri: lb://MESSAGE #
         predicates:
         - Path=/api/message/**
       - id: role
@@ -19,20 +29,33 @@ spring:
         predicates:
         - Path=/api/role/**
       - id: offer
-        uri: lb://OFFRE-PRODUIT #ok
+        uri: lb://OFFRE-PRODUIT #
         predicates:
         - Path=/api/offer/**
       - id: product
-        uri: lb://OFFRE-PRODUIT #ok
+        uri: lb://OFFRE-PRODUIT #
         predicates:
         - Path=/api/product/**
+      - id: product
+        uri: lb://OFFRE-PRODUIT #
+        predicates:
+        - Path=/api/request/**
       - id: social
-        uri: lb://NOTATION-COMMENTAIRE #ok
+        uri: lb://NOTATION-COMMENTAIRE #
         predicates:
         - Path=/api/comments/**
-
+      - id: commande
+        uri: lb://COMMANDE #
+        predicates:
+        - Path=/api/commande/**
+      
+server:
+    address: 192.168.43.13 
+    
 eureka:
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka/
+
+      
 

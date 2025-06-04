@@ -12,6 +12,8 @@ public interface UtilisateurRepository  extends JpaRepository<Utilisateur,Long>{
     List<Utilisateur> findByActive(boolean active);
     List<Utilisateur> findByVille(String ville);
     Utilisateur  findByLogin(String login);
+    Utilisateur findByTel(String tel);
+    Utilisateur findByEmail(String email);
     List<Utilisateur> findByNom(String nom);
     List<Utilisateur> findByPrenom(String prenom);
 }

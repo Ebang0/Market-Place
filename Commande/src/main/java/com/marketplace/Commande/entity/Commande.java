@@ -18,7 +18,15 @@ public class Commande {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private Long idOffer;
+    private Long idUser;
+    private Double quantite;
     private LocalDateTime commandeDate;
-    private String statut;
+    private Status statut;
     private Double prixtotal;
+
+    public enum Status
+    {
+        LOADING
+    } 
 }
